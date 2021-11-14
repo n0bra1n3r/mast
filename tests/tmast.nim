@@ -15,7 +15,7 @@ should "bind symbol":
   doAssert bindSym"false" == sym`false`
 
 should "generate symbol":
-  doAssert compiles sym Proc`test`
+  doAssert nnkSym == kind sym Proc`test`
 
 should "generate literals":
   doAssert newLit("test") == lit"test"
@@ -23,6 +23,10 @@ should "generate literals":
 
 should "produce identifier":
   doAssert ident"test" == ast`test`
+
+should "interpolate identifier name":
+  let i = 1
+  doAssert ident"test1" == ast`test{i}`
 
 should "produce correct AST for typical proc":
   template astImpl() {.dirty.} =
@@ -34,7 +38,7 @@ should "produce correct AST for typical proc":
 
       when true:
         if not isNil(pt):
-          echo pt[]
+          echo "value is: ", pt[]
 
   let refAst = getAst astImpl()
 
@@ -80,6 +84,7 @@ should "produce correct AST for typical proc":
                   StmtList:
                     Command:
                       `echo`
+                      "value is: "
                       BracketExpr:
                         `pt`
 
