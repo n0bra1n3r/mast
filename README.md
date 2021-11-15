@@ -82,6 +82,11 @@ The `Proc` symbol here corresponds to [`nskProc`](https://nim-lang.org/docs/macr
 and the symbol inside the backticks can be interpolated in the same way as
 identifiers.
 
+## Installing
+
+The package can be installed by following the nimble instructions
+[here](https://github.com/nim-lang/nimble#nimble-install).
+
 ## Usage
 
 Simply import mast into your module to start using it.
