@@ -11,7 +11,7 @@ macro sym*(name: untyped{nkAccQuoted}): NimNode =
   newCall(bindSym"bindSym", newLit strVal name[0])
 
 macro errorNimSymKind(kind, node: untyped) =
-  error("invalid Nim symbol kind: " & kind.repr, node)
+  error("invalid symbol kind: " & kind.repr, node)
 
 template checkedNimSymKind(kind, node: untyped): NimSymKind =
   when not compiles(NimSymKind.`nsk kind`):
@@ -33,7 +33,7 @@ macro sym*(kind: untyped{call}): NimNode =
     result.add(ident)
 
 macro errorNimNodeKind(kind, node: untyped) =
-  error("invalid Nim node kind: " & kind.repr, node)
+  error("invalid node kind: " & kind.repr, node)
 
 template checkedNimNodeKind(kind, node: untyped): NimNodeKind =
   when not compiles(NimNodeKind.`nnk kind`):
