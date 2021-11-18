@@ -28,6 +28,10 @@ should "interpolate identifier name":
   let i = 1
   doAssert ident"test1" == ast`test{i}`
 
+should "embed variable into ast":
+  let someLit = "iamastring"
+  doAssert newLit("iamastring") == ast (lit someLit)
+
 should "produce correct AST for typical proc":
   template astImpl() {.dirty.} =
     proc test() =
