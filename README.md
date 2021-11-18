@@ -24,7 +24,7 @@ The following is an example usage:
 ```nim
 import mast
 
-macro makeMain(body: untyped) =
+macro makeMain(say: static string) =
   ast:
     ProcDef:
       `main`
@@ -34,15 +34,21 @@ macro makeMain(body: untyped) =
         Empty
       Empty
       Empty
-      (body)
+      StmtList:
+        Command:
+          `echo`
+          "Hello macro!"
+        Command:
+          `echo`
+          (lit say)
 
-makeMain:
-  echo "Hello world!"
+makeMain "Hello world!"
 ```
 
 ```nim
 # `makeMain` expands to:
 proc main() =
+  echo "Hello macro!"
   echo "Hello world!"
 ```
 
