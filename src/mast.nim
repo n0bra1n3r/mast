@@ -14,7 +14,7 @@ macro errorNimSymKind(kind, node: untyped) =
   error("invalid symbol kind: " & kind.repr, node)
 
 template checkedNimSymKind(kind, node: untyped): NimSymKind =
-  when not compiles(NimSymKind.`nsk kind`):
+  when not compiles NimSymKind.`nsk kind`:
     errorNimSymKind(kind, node)
   else:
     NimSymKind.`nsk kind`
@@ -36,7 +36,7 @@ macro errorNimNodeKind(kind, node: untyped) =
   error("invalid node kind: " & kind.repr, node)
 
 template checkedNimNodeKind(kind, node: untyped): NimNodeKind =
-  when not compiles(NimNodeKind.`nnk kind`):
+  when not compiles NimNodeKind.`nnk kind`:
     errorNimNodeKind(kind, node)
   else:
     NimNodeKind.`nnk kind`
