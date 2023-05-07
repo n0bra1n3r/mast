@@ -32,6 +32,10 @@ macro sym*(kind: untyped{call}): NimNode =
     let ident = newCall(bindSym"fmt", newLit repr)
     result.add(ident)
 
+proc `...`*(node: NimNode): seq[NimNode] =
+  for child in node:
+    result.add child
+
 macro errorNimNodeKind(kind, node: untyped) =
   error("invalid node kind: " & kind.repr, node)
 
@@ -56,7 +60,7 @@ proc astImpl(tree: NimNode): NimNode =
     var repr: string
     for ident in tree: repr &= strVal ident
     result = newCall(bindSym"newIdentNode", newCall(bindSym"fmt", newLit repr))
-  of {nnkCall, nnkCallStrLit, nnkCommand}:
+  of nnkCall, nnkCallStrLit, nnkCommand:
     let repr = strVal tree[0]
     result = newCall(bindSym"newNimNode",
       newCall(bindSym"checkedNimNodeKind", ident repr, tree))
