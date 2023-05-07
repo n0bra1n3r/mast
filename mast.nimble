@@ -1,6 +1,6 @@
 # Package
 
-version     = "0.2.0"
+version     = "0.3.0"
 author      = "n0bra1n3r"
 description = "A simple DSL for defining abstract syntax trees in Nim"
 license     = "MIT"
