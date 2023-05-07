@@ -32,6 +32,36 @@ should "embed variable into ast":
   let someLit = "iamastring"
   doAssert newLit("iamastring") == ast (lit someLit)
 
+should "compile spread operator":
+  template body() =
+    echo "line 0"
+    echo "line 1"
+    echo "line 3"
+
+  template astImpl() =
+    proc test() =
+      echo "line 0"
+      echo "line 1"
+      echo "line 3"
+
+  let bodyAst = getAst body()
+
+  let procAst = ast do:
+    ProcDef:
+      `test`
+      Empty
+      Empty
+      FormalParams:
+        Empty
+      Empty
+      Empty
+      StmtList:
+        (...bodyAst)
+
+  let refAst = getAst astImpl()
+
+  doAssert refAst == procAst
+
 should "produce correct AST for typical proc":
   template astImpl() {.dirty.} =
     proc test() =
