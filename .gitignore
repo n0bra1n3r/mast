@@ -1,8 +1,14 @@
-# Build artifacts
-nimcache/
-build/
+# Build
+
+/build
+/nimcache
+
 *.exe
 *.pdb
 
-# Test output
-testresults
+# Test
+/testresults
+
+# Project
+
+/.nvim/workspace.vim
