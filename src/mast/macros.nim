@@ -43,6 +43,27 @@ proc `pragma=`*(node, pragma: NimNode) =
   else:
     macros.`pragma=`(node, pragma)
 
+proc copyIdentDefs*(node: NimNode): NimNode =
+  expectKind node: {
+    nnkConstSection,
+    nnkFormalParams,
+    nnkGenericParams,
+    nnkLetSection,
+    nnkRecCase,
+    nnkRecList,
+    nnkVarSection
+  }
+
+  result = node.kind.newTree()
+
+  for identDef in node:
+    if identDef.len > 3:
+      let defType = identDef[^2]
+      for ident in identDef[0..^3]:
+        result.add newIdentDefs(ident, defType)
+    else:
+      result.add identDef
+
 proc ofInherit*(node: NimNode): NimNode =
   expectKind node: nnkTypeDef
   expectKind node[2]: nnkObjectTy
