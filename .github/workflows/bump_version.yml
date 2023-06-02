@@ -10,7 +10,6 @@ on:
         options:
         - patch
         - minor
-        default: all
   pull_request:
     branches: [staging]
     types: [closed]
