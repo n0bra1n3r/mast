@@ -1,4 +1,4 @@
-import std/macros
+import std/[enumerate, macros]
 
 export macros except
   name,
