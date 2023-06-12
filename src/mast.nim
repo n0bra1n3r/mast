@@ -32,21 +32,6 @@ macro sym*(kind: untyped{call}): NimNode =
     let ident = newCall(bindSym"fmt", newLit repr)
     result.add(ident)
 
-proc `...`*(node: NimNode): seq[NimNode] =
-  for child in node:
-    result.add child
-
-template `~>.`*(node: NimNode, field: untyped{nkIdent}): seq[NimNode] =
-  var result = newSeq[NimNode]()
-  for child in node:
-    result.add child.field
-  result
-
-proc shift*(node: NimNode): NimNode =
-  expectMinLen node: 1
-  result = node[0]
-  node.del 0
-
 macro errorNimNodeKind(kind, node: untyped) =
   error("invalid node kind: " & kind.repr, node)
 
